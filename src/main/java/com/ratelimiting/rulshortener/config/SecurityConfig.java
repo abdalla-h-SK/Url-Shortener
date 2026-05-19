@@ -23,10 +23,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/api/v1/urls/**").permitAll()
-                        .requestMatchers("/{shortHash}").permitAll()
-                        .requestMatchers("/api/v1/secured/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 ).addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
