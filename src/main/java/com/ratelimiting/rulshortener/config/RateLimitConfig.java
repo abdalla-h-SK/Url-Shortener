@@ -21,7 +21,7 @@ public class RateLimitConfig {
     @Bean
     public RedisClient redisClient() {
         return RedisClient.create(RedisURI.builder()
-                .withHost("localhost")
+                .withHost("redis")
                 .withPort(6379)
                 .build());
     }

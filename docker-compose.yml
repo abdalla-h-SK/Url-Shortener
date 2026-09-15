@@ -3,3 +3,24 @@ services:
     image: redis:7.0-alpine
     ports:
       - "6379:6379"
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: boody
+      MYSQL_DATABASE: urlshortener
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pboody"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+    depends_on:
+      redis:
+        condition: service_started
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
