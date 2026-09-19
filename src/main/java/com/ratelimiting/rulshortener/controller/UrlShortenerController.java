@@ -34,7 +34,7 @@ public class UrlShortenerController {
         newUrl.setShortHash(shortHash);
         urlRepository.save(newUrl);
 
-        String finalUrl = "http://localhost:8080/" + shortHash;
+        String finalUrl = "[the domain here]/" + shortHash;
         return ResponseEntity.ok(finalUrl);
     }
 

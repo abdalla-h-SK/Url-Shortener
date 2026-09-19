@@ -18,6 +18,7 @@ import java.time.Duration;
 @Configuration
 public class RateLimitConfig {
 
+    /*
     @Bean
     public RedisClient redisClient() {
         return RedisClient.create(RedisURI.builder()
@@ -25,6 +26,33 @@ public class RateLimitConfig {
                 .withPort(6379)
                 .build());
     }
+    */
+
+
+    @Bean
+    public RedisClient redisClient() {
+        return RedisClient.create(
+                RedisURI.create(System.getenv("REDIS_URL"))
+        );
+    }
+
+
+    /*
+    @Bean
+    public RedisClient redisClient() {
+        RedisURI redisURI = RedisURI.builder()
+                .withHost(System.getenv("REDIS_HOST"))
+                .withPort(Integer.parseInt(System.getenv("REDIS_PORT")))
+                .withAuthentication(
+                        System.getenv("REDIS_USERNAME"),
+                        System.getenv("REDIS_PASSWORD")
+                )
+                .withSsl(Boolean.parseBoolean(System.getenv("REDIS_SSL")))
+                .build();
+
+        return RedisClient.create(redisURI);
+    }
+    */
 
     @Bean
     public ProxyManager<String> proxyManager(RedisClient redisClient) {
