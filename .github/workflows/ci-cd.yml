@@ -15,11 +15,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
+
+      - name: Make Maven Wrapper executable
+        run: chmod +x mvnw
 
       - name: Build and Test with Maven
         run: ./mvnw clean package
@@ -45,6 +48,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: application-jar
+          # This places the downloaded JAR directly into the target folder
+          # so your Dockerfile COPY target/*.jar command works perfectly.
           path: target/
 
       - name: Set up Docker Buildx
